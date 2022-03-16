@@ -4,27 +4,31 @@ declare(strict_types = 1);
 
 namespace Model\Repository;
 
+use IdentityMap;
 use Model\Entity;
 
 class Product
 {
+    
     /**
      * Поиск продуктов по массиву id
      *
      * @param int[] $ids
      * @return Entity\Product[]
+     *
      */
     public function search(array $ids = []): array
     {
         if (!count($ids)) {
             return [];
         }
-
-        $productList = [];
-        foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
+        $list = (new IdentityMap())->find($ids,$this);
+       
+        foreach ($list as $item) { 
             $productList[] = new Entity\Product($item['id'], $item['name'], $item['price']);
+            
         }
-
+     
         return $productList;
     }
 

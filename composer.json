@@ -1,5 +1,5 @@
 {
-    "name": "Online shop",
+    "name": "vendor_name/online-shop",
     "description": "Homework project for Web Architecture course. Licensed by the Geekbrains",
     "autoload": {
         "psr-4": {
@@ -11,6 +11,7 @@
     },
     "require": {
         "php": ">=7.1.0",
+        "symfony/apache-pack": "^1.0",
         "symfony/config": "^4.1",
         "symfony/dependency-injection": "^4.1",
         "symfony/http-foundation": "^4.1",

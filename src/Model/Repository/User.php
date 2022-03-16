@@ -3,7 +3,7 @@
 declare(strict_types = 1);
 
 namespace Model\Repository;
-
+use IdentityMap;
 use Model\Entity;
 
 class User
@@ -15,8 +15,9 @@ class User
      * @return Entity\User|null
      */
     public function getById(int $id): ?Entity\User
-    {
-        foreach ($this->getDataFromSource(['id' => $id]) as $user) {
+    {   
+        $listId = (new IdentityMap())->find([$id],$this);
+        foreach ($listId as $user) {
             return $this->createUser($user);
         }
 
@@ -31,7 +32,9 @@ class User
      */
     public function getByLogin(string $login): ?Entity\User
     {
-        foreach ($this->getDataFromSource(['login' => $login]) as $user) {
+        $listLogin = (new IdentityMap())->find([$login],$this,'
+        login');
+        foreach ($listLogin as $user) {
             if ($user['login'] === $login) {
                 return $this->createUser($user);
             }
@@ -49,7 +52,6 @@ class User
     private function createUser(array $user): Entity\User
     {
         $role = $user['role'];
-
         return new Entity\User(
             $user['id'],
             $user['name'],
